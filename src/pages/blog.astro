@@ -49,6 +49,13 @@ const posts: Post[] = (
           flex: initial;
           color: #9ca3af;
         }
+        /* On small screens, clamp long titles to one line */
+        ul li a {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          display: block;
+        }
       }
     </style>
   </head>
@@ -79,9 +86,7 @@ const posts: Post[] = (
                     }
                   )}
                 </time>
-                <a href={post.url} class='truncate'>
-                  {post.frontmatter.title}
-                </a>
+                <a href={post.url}>{post.frontmatter.title}</a>
               </li>
             ))
           }
