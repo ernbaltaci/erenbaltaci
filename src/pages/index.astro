@@ -56,14 +56,10 @@ const work: WorkFrontmatter[] = (await Astro.glob('../data/work/*.md')).map(
       </aside>
 
       <section>
-        <h3
-          class='accent'
-          style='margin:0 0 12px 0; background-color: #111827; padding: 8px 16px; border-radius: 12px;'
-        >
-          Work
-        </h3>
+        <h3 class='accent'>Work</h3>
         <div class='card'>
           <div
+            class='work-grid stack-md'
             style='display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:start'
           >
             <div class='muted'>Current</div>
@@ -100,14 +96,10 @@ const work: WorkFrontmatter[] = (await Astro.glob('../data/work/*.md')).map(
           </div>
         </div>
 
-        <h3
-          class='accent'
-          style='margin:0 0 12px 0; background-color: #111827; padding: 8px 16px; border-radius: 12px;'
-        >
-          Projects
-        </h3>
+        <h3 class='accent'>Projects</h3>
         <div class='card'>
           <div
+            class='projects-grid stack-md'
             style='display:grid;grid-template-columns:120px 1fr;gap:8px;align-items:start'
           >
             <div class='muted'>Active</div>
@@ -142,12 +134,7 @@ const work: WorkFrontmatter[] = (await Astro.glob('../data/work/*.md')).map(
           </div>
         </div>
 
-        <h3
-          class='accent'
-          style='margin:20px 0 12px 0; background-color: #111827; padding: 8px 16px; border-radius: 12px;'
-        >
-          Blog
-        </h3>
+        <h3 class='accent'>Blog</h3>
         <div class='card'>
           <ul style='margin:0;padding-left:18px;list-style:none'>
             {

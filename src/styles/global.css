@@ -104,6 +104,29 @@ blockquote {
   color: #34d399;
 }
 
+/* Title pills (e.g., Work, Projects) */
+h3.accent {
+  display: inline-block;
+  background-color: #111827;
+  padding: 8px 16px;
+  border-radius: 12px;
+  margin: 20px 0 12px 0;
+}
+
+/* Remove extra spacing before the first title in a section */
+section > h3.accent:first-of-type {
+  margin-top: 0;
+}
+
+@media (max-width: 600px) {
+  h3.accent {
+    font-size: 1rem;
+    line-height: 1.2;
+    padding: 6px 12px;
+    margin-top: 16px;
+  }
+}
+
 hr {
   border: none;
   border-top: 1px solid #111827;
@@ -133,5 +156,40 @@ hr {
   .content-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* --- Mobile/responsive safety net --- */
+html,
+body {
+  overflow-x: hidden; /* prevent horizontal scroll due to wide children */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* predictable sizing on mobile */
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 16px; /* reduce side padding on small screens */
+  }
+
+  /* Make common two-column inline grids stack on mobile */
+  .stack-md {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+/* Utility to clamp long inline elements like dates/titles */
+.no-wrap {
+  white-space: nowrap;
+}
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
