@@ -2,58 +2,29 @@
 import BaseHead from '../components/BaseHead.astro';
 import ProfileCard from '../components/ProfileCard.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+import type {
+  BlogPostListItem,
+  ProjectFrontmatter,
+  WorkFrontmatter,
+} from '../types';
 // Fetch latest posts for Logbook
-type Post = {
-  frontmatter: { publishDate: string; title: string };
-  url: string;
-};
-const posts: Post[] = (
-  (await Astro.glob('./blog/*.{md,mdx}')) as unknown as Post[]
+const posts: BlogPostListItem[] = (
+  (await Astro.glob('./blog/*.{md,mdx}')) as unknown as BlogPostListItem[]
 )
   .sort(
-    (a: Post, b: Post) =>
+    (a: BlogPostListItem, b: BlogPostListItem) =>
       new Date(b.frontmatter.publishDate).valueOf() -
       new Date(a.frontmatter.publishDate).valueOf()
   )
   .slice(0, 10);
 
-const projects = [
-  {
-    name: 'Techno Bot',
-    description: 'Best entertainment bot for your Discord server',
-    url: 'https://technobot.xyz',
-    isInactive: false,
-  },
-  {
-    name: 'Dclist.net',
-    description: 'Discord bot list.',
-    isInactive: true,
-  },
-];
+const projects: ProjectFrontmatter[] = (
+  await Astro.glob('../data/projects/*.md')
+).map((mod: any) => mod.frontmatter as ProjectFrontmatter);
 
-const work = [
-  {
-    name: 'Techno Bot',
-    description: 'Best entertainment bot for your Discord server',
-    url: 'https://technobot.xyz',
-    past: false,
-    role: 'Founder',
-  },
-  {
-    name: 'Sellibra',
-    description: 'Sellibra',
-    url: 'https://www.linkedin.com/company/sellibra/',
-    past: true,
-    role: 'Contract Full Stack Developer',
-  },
-  {
-    name: 'Digiens Academy',
-    description: 'Digiens Academy',
-    url: 'https://www.linkedin.com/company/digiensacademy/',
-    past: true,
-    role: 'Contract Full Stack Developer',
-  },
-];
+const work: WorkFrontmatter[] = (await Astro.glob('../data/work/*.md')).map(
+  (mod: any) => mod.frontmatter as WorkFrontmatter
+);
 ---
 
 <!DOCTYPE html>

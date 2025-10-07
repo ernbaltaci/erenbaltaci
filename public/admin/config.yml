@@ -4,19 +4,70 @@ backend:
 
 publish_mode: editorial_workflow
 
-media_folder: "src/assets" # Media files will be stored in the repo under static/images/uploads
-public_folder: "/assets" # The src attribute for uploaded media will begin with /images/uploads
+media_folder: 'src/assets' # Media files will be stored in the repo under static/images/uploads
+public_folder: '/assets' # The src attribute for uploaded media will begin with /images/uploads
 
 collections:
-  - name: "blog" # Used in routes, e.g., /admin/collections/blog
-    label: "Blog" # Used in the UI
-    folder: "src/pages/blog" # The path to the folder where the documents are stored
+  - name: 'blog' # Used in routes, e.g., /admin/collections/blog
+    label: 'Blog' # Used in the UI
+    folder: 'src/pages/blog' # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
-    slug: "{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    slug: '{{slug}}' # Filename template, e.g., YYYY-MM-DD-title.md
     fields: # The fields for each document, usually in front matter
-      - {label: "Layout", name: "layout", widget: "hidden", default: "../../layouts/BlogPost.astro"}
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Description", name: "description", widget: "string"}
-      - {label: "Publish Date", name: "publishDate", widget: "datetime"}
-      - {label: "Hero Image", name: "heroImage", widget: "image"}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - {
+          label: 'Layout',
+          name: 'layout',
+          widget: 'hidden',
+          default: '../../layouts/BlogPost.astro',
+        }
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Description', name: 'description', widget: 'string' }
+      - { label: 'Publish Date', name: 'publishDate', widget: 'datetime' }
+      - { label: 'Hero Image', name: 'heroImage', widget: 'image' }
+      - { label: 'Body', name: 'body', widget: 'markdown' }
+  - name: 'projects'
+    label: 'Projects'
+    folder: 'src/data/projects'
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { label: 'Name', name: 'name', widget: 'string' }
+      - {
+          label: 'Description',
+          name: 'description',
+          widget: 'string',
+          required: false,
+        }
+      - { label: 'URL', name: 'url', widget: 'string', required: false }
+      - {
+          label: 'Inactive',
+          name: 'isInactive',
+          widget: 'boolean',
+          default: false,
+          required: false,
+        }
+      - { label: 'Body', name: 'body', widget: 'markdown', required: false }
+  - name: 'work'
+    label: 'Work'
+    folder: 'src/data/work'
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { label: 'Name', name: 'name', widget: 'string' }
+      - { label: 'Role', name: 'role', widget: 'string' }
+      - {
+          label: 'Description',
+          name: 'description',
+          widget: 'string',
+          required: false,
+        }
+      - { label: 'URL', name: 'url', widget: 'string', required: false }
+      - {
+          label: 'Past',
+          name: 'past',
+          widget: 'boolean',
+          default: false,
+          required: false,
+        }
+      - { label: 'Body', name: 'body', widget: 'markdown', required: false }
+
