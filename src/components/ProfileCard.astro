@@ -1,0 +1,53 @@
+---
+export interface Props {
+  name: string;
+  avatarSrc: string;
+  occupation?: string;
+  location?: string;
+  backHref?: string;
+  backLabel?: string;
+}
+
+const {
+  name,
+  avatarSrc,
+  occupation,
+  location,
+  backHref,
+  backLabel = 'Back',
+} = Astro.props as Props;
+---
+
+<div class='card' style='text-align:center'>
+  <img
+    src={avatarSrc}
+    alt='Avatar'
+    style='width:120px;height:120px;border-radius:12px;border:1px solid #111827;display:block;margin:0 auto 10px'
+  />
+  <div class='muted' style='font-size:14px'>Name</div>
+  <h2 style='margin:4px 0 8px 0'>{name}</h2>
+  {
+    occupation && (
+      <div class='muted' style='font-size:14px'>
+        Occupation: {occupation}
+      </div>
+    )
+  }
+  {
+    location && (
+      <div class='muted' style='font-size:14px;margin-top:8px'>
+        Location: {location}
+      </div>
+    )
+  }
+  <hr />
+  <slot />
+  {
+    backHref && (
+      <a href={backHref} class='muted' style='text-decoration:none'>
+        &larr; {backLabel}
+      </a>
+    )
+  }
+</div>
+

@@ -4,16 +4,17 @@
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
 body {
-	font-family: Verdana, sans-serif;
-	margin: auto;
-	padding: 20px;
-	max-width: 65ch;
-	text-align: left;
-	background-color: #fff;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	line-height: 1.5;
-	color: #444;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+  margin: 0;
+  padding: 40px;
+  max-width: 100%;
+  text-align: left;
+  background-color: #0b0d10; /* near-black */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.65;
+  color: #d1d5db; /* gray-300 */
 }
 h1,
 h2,
@@ -23,44 +24,114 @@ h5,
 h6,
 strong,
 b {
-	color: #222;
+  color: #e5e7eb; /* gray-100 */
 }
 a {
-	color: #3273dc;
+  color: #60a5fa; /* blue-400 */
+  text-decoration: none;
+}
+a:hover {
+  color: #93c5fd; /* blue-300 */
+  text-decoration: underline;
 }
 nav a {
-	margin-right: 10px;
+  margin-right: 12px;
 }
 textarea {
-	width: 100%;
-	font-size: 16px;
+  width: 100%;
+  font-size: 16px;
 }
 input {
-	font-size: 16px;
+  font-size: 16px;
 }
 content {
-	line-height: 1.6;
+  line-height: 1.6;
 }
 table {
-	width: 100%;
+  width: 100%;
 }
 img {
-	max-width: 100%;
+  max-width: 100%;
 }
 code {
-	padding: 2px 5px;
-	background-color: #f2f2f2;
+  padding: 2px 6px;
+  background-color: #111827; /* gray-900 */
+  color: #e5e7eb;
+  border: 1px solid #1f2937; /* gray-800 */
+  border-radius: 4px;
 }
 pre {
-	padding: 1rem;
+  padding: 1rem;
 }
 pre > code {
-	all: unset;
+  all: unset;
 }
 blockquote {
-	border: 1px solid #999;
-	color: #222;
-	padding: 2px 0px 2px 20px;
-	margin: 0px;
-	font-style: italic;
+  border-left: 2px solid #374151; /* gray-700 */
+  color: #9ca3af; /* gray-400 */
+  padding: 2px 0px 2px 16px;
+  margin: 0px;
+  font-style: italic;
 }
+
+/* Layout helpers for profile-like landing */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 900px) {
+  .container {
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+  }
+}
+
+.card {
+  background: transparent;
+  border: 1px solid #111827;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.muted {
+  color: #9ca3af;
+}
+.accent {
+  color: #34d399;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #111827;
+  margin: 16px 0;
+}
+
+/* Centered content containers */
+.content {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.content.narrow {
+  max-width: 740px;
+}
+
+.content-grid {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 280px 1fr; /* profile left, content right */
+  gap: 40px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -1,72 +1,205 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import ProfileCard from '../components/ProfileCard.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+// Fetch latest posts for Logbook
+type Post = {
+  frontmatter: { publishDate: string; title: string };
+  url: string;
+};
+const posts: Post[] = (
+  (await Astro.glob('./blog/*.{md,mdx}')) as unknown as Post[]
+)
+  .sort(
+    (a: Post, b: Post) =>
+      new Date(b.frontmatter.publishDate).valueOf() -
+      new Date(a.frontmatter.publishDate).valueOf()
+  )
+  .slice(0, 10);
+
+const projects = [
+  {
+    name: 'Techno Bot',
+    description: 'Best entertainment bot for your Discord server',
+    url: 'https://technobot.xyz',
+    isInactive: false,
+  },
+  {
+    name: 'Dclist.net',
+    description: 'Discord bot list.',
+    isInactive: true,
+  },
+];
+
+const work = [
+  {
+    name: 'Techno Bot',
+    description: 'Best entertainment bot for your Discord server',
+    url: 'https://technobot.xyz',
+    past: false,
+    role: 'Founder',
+  },
+  {
+    name: 'Sellibra',
+    description: 'Sellibra',
+    url: 'https://www.linkedin.com/company/sellibra/',
+    past: true,
+    role: 'Contract Full Stack Developer',
+  },
+  {
+    name: 'Digiens Academy',
+    description: 'Digiens Academy',
+    url: 'https://www.linkedin.com/company/digiensacademy/',
+    past: true,
+    role: 'Contract Full Stack Developer',
+  },
+];
 ---
 
 <!DOCTYPE html>
-<html lang="en-us">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-	</head>
-	<body>
-		<Header title={SITE_TITLE} />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project. Add a blog RSS feed with <a
-					href="https://docs.astro.build/en/guides/rss/"
-					>@astrojs/rss
-				</a>.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/pages/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
+<html lang='en-us'>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <main class='container'>
+      <aside>
+        <ProfileCard
+          name='Eren Baltacı'
+          avatarSrc='/placeholder-social.jpg'
+          occupation='Solopreneur'
+          location='Turkiye'
+        >
+          <nav style='font-size:14px'>
+            <a href='mailto:ernbaltaci@gmail.com'>Email</a>
+            |
+            <a href='/blog'>Blog</a>
+            |
+            <a
+              href='https://github.com/ernbaltaci'
+              target='_blank'
+              rel='noopener'>Github</a
+            >
+          </nav>
+        </ProfileCard>
+      </aside>
 
-		<script>
-			declare global {
-				interface Window {
-					netlifyIdentity: any;
-				}
-			}
+      <section>
+        <h3
+          class='accent'
+          style='margin:0 0 12px 0; background-color: #111827; padding: 8px 16px; border-radius: 12px;'
+        >
+          Work
+        </h3>
+        <div class='card'>
+          <div
+            style='display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:start'
+          >
+            <div class='muted'>Current</div>
+            <ul style='margin:0;padding-left:18px;list-style:none'>
+              {
+                work
+                  .filter((w) => !w.past)
+                  .map((w) => (
+                    <li style='margin:2px 0'>
+                      {w.role} @
+                      <a href={w.url} target='_blank' rel='noopener'>
+                        {w.name}
+                      </a>
+                    </li>
+                  ))
+              }
+            </ul>
 
-			if (window.netlifyIdentity) {
-			  window.netlifyIdentity.on("init", ((user: any) => {
-				if (!user) {
-				  window.netlifyIdentity.on("login", () => {
-					document.location.href = "/admin/";
-				  });
-				}
-			  }));
-			}
-		  </script>
-	</body>
+            <div class='muted'>Past</div>
+            <ul style='margin:0;padding-left:18px;list-style:none'>
+              {
+                work
+                  .filter((w) => w.past)
+                  .map((w) => (
+                    <li style='margin:2px 0'>
+                      {w.role} @
+                      <a href={w.url} target='_blank' rel='noopener'>
+                        {w.name}
+                      </a>
+                    </li>
+                  ))
+              }
+            </ul>
+          </div>
+        </div>
+
+        <h3
+          class='accent'
+          style='margin:0 0 12px 0; background-color: #111827; padding: 8px 16px; border-radius: 12px;'
+        >
+          Projects
+        </h3>
+        <div class='card'>
+          <div
+            style='display:grid;grid-template-columns:120px 1fr;gap:8px;align-items:start'
+          >
+            <div class='muted'>Active</div>
+            <div>
+              {
+                projects
+                  .filter((project) => !project.isInactive)
+                  .map((project) => (
+                    <a href={project.url} target='_blank' rel='noopener'>
+                      {project.name}
+                    </a>
+                  ))
+              }
+            </div>
+            <div class='muted'>Inactive</div>
+            <div>
+              {
+                projects
+                  .filter((project) => project.isInactive)
+                  .map((project) => (
+                    <a
+                      href={project.url || '#'}
+                      target='_blank'
+                      rel='noopener'
+                      class={project.url ? '' : 'muted'}
+                    >
+                      {project.name}
+                    </a>
+                  ))
+              }
+            </div>
+          </div>
+        </div>
+
+        <h3
+          class='accent'
+          style='margin:20px 0 12px 0; background-color: #111827; padding: 8px 16px; border-radius: 12px;'
+        >
+          Blog
+        </h3>
+        <div class='card'>
+          <ul style='margin:0;padding-left:18px;list-style:none'>
+            {
+              posts.map((post) => (
+                <li style='display:flex;gap:12px'>
+                  <time
+                    datetime={post.frontmatter.publishDate}
+                    class='muted'
+                    style='flex:0 0 130px'
+                  >
+                    {new Date(post.frontmatter.publishDate).toLocaleDateString(
+                      'en-us',
+                      { year: 'numeric', month: 'short', day: 'numeric' }
+                    )}
+                  </time>
+                  <a href={post.url}>{post.frontmatter.title}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>
+

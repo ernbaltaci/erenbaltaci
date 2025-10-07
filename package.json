@@ -1,5 +1,5 @@
 {
-  "name": "@example/blog",
+  "name": "@ernbaltaci/portfolio",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -14,5 +14,7 @@
     "@astrojs/mdx": "^0.9.0",
     "@astrojs/sitemap": "^1.0.0",
     "astro": "^1.0.5"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
+

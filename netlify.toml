@@ -1,0 +1,14 @@
+[build]
+  command = "yarn build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Optional: Redirect all routes to Astro for SPA-like behavior (if needed)
+#[[redirects]]
+#  from = "/*"
+#  to = "/index.html"
+#  status = 200
+
+
