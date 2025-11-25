@@ -6,7 +6,7 @@ subtitle: Word & voice games for 40K Discord servers
 category: Project
 timeline: 2020 — Present
 description: Launched a Discord bot 40K+ servers and 3M users with multiplayer games.
-image: /assets/techno_bot_king.a9daa3f2.svg
+image: https://technobot.xyz/_next/static/media/techno_bot_king.a9daa3f2.svg
 imageAlt: TechnoBot
 url: https://technobot.xyz
 ---
