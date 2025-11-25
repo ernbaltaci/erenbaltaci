@@ -1,10 +1,9 @@
 ---
-import { marked } from 'marked';
-import type { ShowcaseFrontmatter } from '../types';
+import type { ShowcaseContent } from '../types';
 
 export interface Props {
   title?: string;
-  items: ShowcaseFrontmatter[];
+  items: ShowcaseContent[];
   limit?: number;
   viewAllHref?: string;
 }
@@ -23,8 +22,6 @@ const orderedItems = [...items].sort((a, b) => {
 });
 const visibleItems = limit ? orderedItems.slice(0, limit) : orderedItems;
 
-const renderMarkdown = (content?: string) =>
-  content ? marked.parse(content) : '';
 ---
 
 {visibleItems.length > 0 && (
@@ -88,13 +85,15 @@ const renderMarkdown = (content?: string) =>
                     {item.timeline && (
                       <p class='timeline muted'>{item.timeline}</p>
                     )}
-                    {(item.details ?? item.description) && (
+                    {item.bodyHtml ? (
                       <div
                         class='dialog-markdown'
-                        set:html={renderMarkdown(
-                          item.details ?? item.description
-                        )}
+                        set:html={item.bodyHtml}
                       />
+                    ) : (
+                      item.description && (
+                        <p class='dialog-markdown'>{item.description}</p>
+                      )
                     )}
 
                     <div class='dialog-footer'>

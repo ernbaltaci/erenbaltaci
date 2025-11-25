@@ -3,20 +3,32 @@ import BaseHead from '../components/BaseHead.astro';
 import ProfileCard from '../components/ProfileCard.astro';
 import ShowcaseSection from '../components/ShowcaseSection.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
-import type { ShowcaseFrontmatter } from '../types';
+import type { ShowcaseFrontmatter, ShowcaseContent } from '../types';
 
-const showcase: ShowcaseFrontmatter[] = (
-  await Astro.glob('../data/showcase/*.md')
-).map((mod: any) => {
-  const frontmatter = mod.frontmatter as ShowcaseFrontmatter;
-  const fallbackSlug =
-    mod?.file?.split('/')?.pop()?.replace('.md', '') ??
-    frontmatter.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-  return {
-    ...frontmatter,
-    slug: frontmatter.slug || fallbackSlug,
-  };
-});
+let showcaseModules: any[] = [];
+try {
+  showcaseModules = await Astro.glob('../data/showcase/*.md');
+} catch (err) {
+  console.warn('Unable to load showcase content', err);
+  showcaseModules = [];
+}
+
+const showcase: ShowcaseContent[] = await Promise.all(
+  showcaseModules.map(async (mod: any) => {
+    const frontmatter = mod.frontmatter as ShowcaseFrontmatter;
+    const fallbackSlug =
+      mod?.file?.split('/')?.pop()?.replace('.md', '') ??
+      frontmatter.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const bodyHtml = mod.compiledContent
+      ? await mod.compiledContent()
+      : undefined;
+    return {
+      ...frontmatter,
+      slug: frontmatter.slug || fallbackSlug,
+      bodyHtml,
+    };
+  })
+);
 const showcasesDescription =
   'Case studies covering the jobs and projects I lead—complete with context, assets, and results.';
 const showcasesUrl =

@@ -107,8 +107,8 @@ collections:
         }
       - { label: 'Description', name: 'description', widget: 'string' }
       - {
-          label: 'Details',
-          name: 'details',
+          label: 'Body',
+          name: 'body',
           widget: 'markdown',
           required: false,
           hint: 'Full story shown inside the popup; supports Markdown.',

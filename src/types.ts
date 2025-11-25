@@ -26,9 +26,12 @@ export interface ShowcaseFrontmatter {
   category: string;
   timeline?: string;
   description: string;
-  details?: string;
   image: string;
   imageAlt?: string;
   url?: string;
+}
+
+export interface ShowcaseContent extends ShowcaseFrontmatter {
+  bodyHtml?: string;
 }
 
