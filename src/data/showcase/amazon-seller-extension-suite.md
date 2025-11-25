@@ -3,7 +3,7 @@ slug: amazon-sellers-extension-suite
 title: Amazon Seller Extension Suite
 subtitle: Full-stack lead for Sellibra’s Chrome tooling
 category: Work
-timeline: Aug 24 - May 2025
+timeline: Aug 24 - May 25
 description: Built the Chrome extensions and UI stack Amazon sellers use to
   scout products and rivals in-browser.
 image: https://lh3.googleusercontent.com/LSK6KoiLZZMhRwN-5E5OCaI4vJ3Lh54cs_4bbd_JBd1_5zr_nUDbfCf5jBaeAG7DHJLFXhI4j4ZCBWP62V8wwCI=s1280-w1280-h800
