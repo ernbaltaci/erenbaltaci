@@ -6,7 +6,7 @@ category: Work
 timeline: Aug 24 - May 2025
 description: Built the Chrome extensions and UI stack Amazon sellers use to
   scout products and rivals in-browser.
-image: /assets/unnamed.png
+image: https://lh3.googleusercontent.com/LSK6KoiLZZMhRwN-5E5OCaI4vJ3Lh54cs_4bbd_JBd1_5zr_nUDbfCf5jBaeAG7DHJLFXhI4j4ZCBWP62V8wwCI=s1280-w1280-h800
 url: https://chromewebstore.google.com/detail/sellibra/nkkkoblojdihmlgmeebdfeanmmkcmcbg
 ---
 I worked as a full-stack developer in a fast-paced startup environment at Sellibra, turning Figma concepts into production features within days.
