@@ -1,7 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import ProfileCard from '../components/ProfileCard.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+import { SITE_TITLE } from '../config';
 
 // Use Astro.glob() to fetch all posts, and then sort them by date.
 type Post = {
@@ -15,12 +15,47 @@ const posts: Post[] = (
     new Date(b.frontmatter.publishDate).valueOf() -
     new Date(a.frontmatter.publishDate).valueOf()
 );
+const blogDescription =
+  'Field notes on API-first SaaS, automation workflows, and building solo.';
+const blogUrl = Astro.url?.toString() ?? 'https://erenbaltaci.com/blog';
 ---
 
 <!DOCTYPE html>
 <html lang='en-us'>
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead
+      title={`Blog • ${SITE_TITLE}`}
+      description={blogDescription}
+      keywords={[
+        'API-first blog',
+        'Astro blog',
+        'SaaS architecture',
+        'automation',
+      ]}
+      structuredData={[
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Blog',
+          name: `${SITE_TITLE} Blog`,
+          description: blogDescription,
+          url: blogUrl,
+          author: {
+            '@type': 'Person',
+            name: 'Eren Baltacı',
+          },
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          itemListElement: posts.map((post, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            url: new URL(post.url, Astro.url).toString(),
+            name: post.frontmatter.title,
+          })),
+        },
+      ]}
+    />
     <style>
       ul {
         list-style-type: none;
@@ -72,6 +107,10 @@ const posts: Post[] = (
         />
       </aside>
       <content>
+        <header class='page-hero'>
+          <h1>API-first field notes</h1>
+          <p>{blogDescription}</p>
+        </header>
         <ul>
           {
             posts.map((post) => (

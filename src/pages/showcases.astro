@@ -1,0 +1,77 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import ProfileCard from '../components/ProfileCard.astro';
+import ShowcaseSection from '../components/ShowcaseSection.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+import type { ShowcaseFrontmatter } from '../types';
+
+const showcase: ShowcaseFrontmatter[] = (
+  await Astro.glob('../data/showcase/*.md')
+).map((mod: any) => {
+  const frontmatter = mod.frontmatter as ShowcaseFrontmatter;
+  const fallbackSlug =
+    mod?.file?.split('/')?.pop()?.replace('.md', '') ??
+    frontmatter.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  return {
+    ...frontmatter,
+    slug: frontmatter.slug || fallbackSlug,
+  };
+});
+const showcasesDescription =
+  'Case studies covering the jobs and projects I lead—complete with context, assets, and results.';
+const showcasesUrl =
+  Astro.url?.toString() ?? 'https://erenbaltaci.com/showcases';
+---
+
+<!DOCTYPE html>
+<html lang='en-us'>
+  <head>
+    <BaseHead
+      title={`Showcases • ${SITE_TITLE}`}
+      description={showcasesDescription}
+      keywords={['case studies', 'portfolio', 'SaaS projects', 'work history']}
+      structuredData={[
+        {
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: `${SITE_TITLE} Showcases`,
+          description: showcasesDescription,
+          url: showcasesUrl,
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          itemListElement: showcase.map((item, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            url: new URL(`/showcases#${item.slug}`, Astro.url).toString(),
+            name: item.title,
+          })),
+        },
+      ]}
+    />
+  </head>
+  <body>
+    <main class='content-grid'>
+      <aside>
+        <ProfileCard
+          name='Eren Baltacı'
+          avatarSrc='/placeholder-social.jpg'
+          occupation='Solopreneur'
+          location='Turkiye'
+          backHref='/'
+          backLabel='Back to Home'
+        />
+      </aside>
+
+      <content>
+        <header class='page-hero'>
+          <h1>Showcases</h1>
+          <p>{showcasesDescription}</p>
+        </header>
+        <ShowcaseSection title='Showcases' items={showcase} />
+      </content>
+    </main>
+  </body>
+</html>
+

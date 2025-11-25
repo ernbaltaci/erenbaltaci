@@ -121,6 +121,34 @@ section > h3.accent:first-of-type {
   margin-top: 0;
 }
 
+.section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.section-view-all {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #60a5fa;
+}
+
+.page-hero {
+  margin-bottom: 24px;
+}
+
+.page-hero h1 {
+  margin: 0 0 8px 0;
+  font-size: 1.8rem;
+}
+
+.page-hero p {
+  margin: 0;
+  color: #9ca3af;
+  max-width: 640px;
+}
+
 @media (max-width: 600px) {
   h3.accent {
     font-size: 1rem;
@@ -171,6 +199,11 @@ hr {
 html,
 body {
   overflow-x: hidden; /* prevent horizontal scroll due to wide children */
+}
+
+html.modal-open,
+body.modal-open {
+  overflow: hidden;
 }
 
 *,

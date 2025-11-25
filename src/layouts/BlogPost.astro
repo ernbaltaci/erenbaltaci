@@ -1,6 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import ProfileCard from '../components/ProfileCard.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 import { Image } from '@astrojs/image/components';
 
 export interface Props {
@@ -30,11 +31,41 @@ const heroImageAsset = assets.find((asset: any) => {
   const index = asset.default.src.indexOf('/assets/');
   return asset.default.src.slice(index) === heroImage;
 });
+
+const pageUrl = Astro.url?.toString() ?? 'https://erenbaltaci.com/blog';
+const ogImage =
+  heroImageAsset?.default?.src || heroImage || '/placeholder-social.jpg';
+const articleStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description || SITE_DESCRIPTION,
+  datePublished: publishDate,
+  dateModified: updatedDate || publishDate,
+  url: pageUrl,
+  image: ogImage,
+  author: {
+    '@type': 'Person',
+    name: SITE_TITLE,
+  },
+  publisher: {
+    '@type': 'Person',
+    name: SITE_TITLE,
+  },
+};
 ---
 
 <html>
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead
+      title={`${title} • ${SITE_TITLE}`}
+      description={description || SITE_DESCRIPTION}
+      image={ogImage}
+      type='article'
+      canonical={pageUrl}
+      structuredData={articleStructuredData}
+      keywords={['blog', 'api-first', 'SaaS', 'automation', title]}
+    />
     <style>
       .title {
         font-size: 2em;

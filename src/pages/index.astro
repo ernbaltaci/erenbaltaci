@@ -1,11 +1,13 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import ProfileCard from '../components/ProfileCard.astro';
+import ShowcaseSection from '../components/ShowcaseSection.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 import type {
   BlogPostListItem,
   ProjectFrontmatter,
   WorkFrontmatter,
+  ShowcaseFrontmatter,
 } from '../types';
 // Fetch latest posts for Logbook
 const posts: BlogPostListItem[] = (
@@ -25,12 +27,53 @@ const projects: ProjectFrontmatter[] = (
 const work: WorkFrontmatter[] = (await Astro.glob('../data/work/*.md')).map(
   (mod: any) => mod.frontmatter as WorkFrontmatter
 );
+
+const showcase: ShowcaseFrontmatter[] = (
+  await Astro.glob('../data/showcase/*.md')
+).map((mod: any) => {
+  const frontmatter = mod.frontmatter as ShowcaseFrontmatter;
+  const fallbackSlug =
+    mod?.file?.split('/')?.pop()?.replace('.md', '') ??
+    frontmatter.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  return {
+    ...frontmatter,
+    slug: frontmatter.slug || fallbackSlug,
+  };
+});
 ---
 
 <!DOCTYPE html>
 <html lang='en-us'>
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead
+      title={`${SITE_TITLE}`}
+      description={SITE_DESCRIPTION}
+      keywords={[
+        'Eren Baltacı',
+        'API-first',
+        'solopreneur',
+        'SaaS',
+        'automation',
+      ]}
+      structuredData={[
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Person',
+          name: 'Eren Baltacı',
+          jobTitle: 'Solopreneur',
+          url: Astro.url?.toString() ?? 'https://erenbaltaci.com',
+          sameAs: [
+            'mailto:ernbaltaci@gmail.com',
+            'https://github.com/ernbaltaci',
+            'https://www.linkedin.com/in/eren-baltaci/',
+          ],
+          worksFor: {
+            '@type': 'Organization',
+            name: 'Eren Baltacı Studio',
+          },
+        },
+      ]}
+    />
   </head>
   <body>
     <main class='container'>
@@ -45,6 +88,8 @@ const work: WorkFrontmatter[] = (await Astro.glob('../data/work/*.md')).map(
             <a href='mailto:ernbaltaci@gmail.com'>Email</a>
             |
             <a href='/blog'>Blog</a>
+            |
+            <a href='/showcases'>Showcases</a>
             |
             <a
               href='https://github.com/ernbaltaci'
@@ -134,7 +179,10 @@ const work: WorkFrontmatter[] = (await Astro.glob('../data/work/*.md')).map(
           </div>
         </div>
 
-        <h3 class='accent'>Blog</h3>
+        <div class='section-title-row'>
+          <h3 class='accent'>Blog</h3>
+          <a class='section-view-all' href='/blog'>View all</a>
+        </div>
         <div class='card'>
           <ul style='margin:0;padding-left:18px;list-style:none'>
             {
@@ -156,6 +204,13 @@ const work: WorkFrontmatter[] = (await Astro.glob('../data/work/*.md')).map(
             }
           </ul>
         </div>
+
+        <ShowcaseSection
+          title='Showcases'
+          items={showcase}
+          limit={4}
+          viewAllHref='/showcases'
+        />
       </section>
     </main>
   </body>

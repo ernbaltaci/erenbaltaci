@@ -18,3 +18,17 @@ export interface WorkFrontmatter {
   past?: boolean;
 }
 
+export interface ShowcaseFrontmatter {
+  slug: string;
+  order?: number;
+  title: string;
+  subtitle?: string;
+  category: string;
+  timeline?: string;
+  description: string;
+  details?: string;
+  image: string;
+  imageAlt?: string;
+  url?: string;
+}
+
