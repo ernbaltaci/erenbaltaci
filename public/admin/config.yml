@@ -114,11 +114,10 @@ collections:
           hint: 'Full story shown inside the popup; supports Markdown.',
         }
       - {
-          label: 'Image',
+          label: 'Image URL',
           name: 'image',
-          widget: 'image',
-          choose_url: false,
-          hint: 'Uploads go to src/assets; rendered as /assets/... in the UI.',
+          widget: 'string',
+          hint: 'Absolute URL (e.g. https://domain.com/preview.png) for the showcase image.',
         }
       - {
           label: 'Image Alt',
